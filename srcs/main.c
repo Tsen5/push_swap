@@ -6,7 +6,7 @@
 /*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 19:15:23 by swann             #+#    #+#             */
-/*   Updated: 2020/01/07 02:24:22 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/12 04:08:49 by swann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		*generate_values(int len, char **array)
 	i = 0;
 	while (++i < len)
 	{
-		values[i - 1] = ft_atoi(array[i]);
+		values[i - 1] = ft_atoi(array[len - i]);
 		j = i - 1;
 		while (--j >= 0)
 		{
@@ -59,10 +59,21 @@ int		*generate_values(int len, char **array)
 	return (values);
 }
 
+void	display_result(int result)
+{
+	if (result == 1)
+		ft_putendl_col_fd("OK", GRN, 1);
+	else if (result == 0)
+		ft_putendl_col_fd("KO", YEL, 2);
+	else
+		ft_putendl_col_fd("Error : bad instruction", RED, 2);
+}
+
 int		main(int argc, char **argv)
 {
 	t_stack	a;
 	t_stack	b;
+	int		result;
 
 	if (argc > 1)
 	{
@@ -73,7 +84,8 @@ int		main(int argc, char **argv)
 			{
 				b.size = 0;
 				b.values = NULL;
-				execute(&a, &b);
+				result = execute(&a, &b);
+				display_result(result);
 			}
 			else
 				ft_putendl_col_fd("Error : values must be different", RED, 2);

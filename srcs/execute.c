@@ -6,7 +6,7 @@
 /*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 12:34:53 by swann             #+#    #+#             */
-/*   Updated: 2020/01/07 01:58:50 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/12 03:59:26 by swann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,29 @@ int		do_operation(char *line, t_stack *a, t_stack *b)
 	return (1);
 }
 
-// static void		print_stack(t_stack *stack)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	ft_putstr("STACK : ");
-// 	while (i < stack->size)
-// 	{
-// 		ft_putnbr(stack->values[i]);
-// 		ft_putchar(' ');
-// 		i++;
-// 	}
-// 	ft_putchar('\n');
-// }
-
-void	leave_execution(t_stack *a, t_stack *b)
+static void		print_stack(t_stack *stack)
 {
-	ft_putendl_col_fd("OK", GRN, 2);
-	clean_stack(a, b);
+	int		i;
+
+	i = 0;
+	ft_putstr("STACK : ");
+	while (i < stack->size)
+	{
+		ft_putnbr(stack->values[i]);
+		ft_putchar(' ');
+		i++;
+	}
+	ft_putchar('\n');
 }
 
-void	execute(t_stack *a, t_stack *b)
+int		execute(t_stack *a, t_stack *b)
 {
 	char	*line;
+	int		result;
 
-	if (is_valid(a, b) == 1)
-		return (leave_execution(a, b));
+	// if (is_valid(a, b) == 1)
+	// 	return (leave_execution(a, b));
+	result = is_valid(a, b);
 	while (42)
 	{
 		ft_putstr("checker_$> ");
@@ -76,19 +72,22 @@ void	execute(t_stack *a, t_stack *b)
 		if (do_operation(line, a, b) == 1)
 		{
 			free(line);
-			// print_stack(a);
-			// print_stack(b);
-			if (is_valid(a, b) == 1)
-			{
-				ft_putendl_col_fd("OK", GRN, 2);
-				break ;
-			}
+			// if (is_valid(a, b) == 1)
+			// {
+			// 	ft_putendl_col_fd("OK", GRN, 1);
+			// 	break ;
+			// }
+			result = is_valid(a, b);
+			print_stack(a);
+			print_stack(b);
 		}
 		else
 		{
+			result = (ft_strlen(line) > 0) ? -1 : result;
 			free(line);
-			ft_putendl_col_fd("KO", YEL, 2);
 			break ;
 		}
 	}
+	clean_stack(a, b);
+	return (result);
 }

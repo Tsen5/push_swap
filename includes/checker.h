@@ -6,7 +6,7 @@
 /*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 19:21:25 by swann             #+#    #+#             */
-/*   Updated: 2020/01/07 01:57:54 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/12 03:10:10 by swann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ typedef struct		s_stack
 */
 int						check_values(int len, char **array);
 int						*generate_values(int len, char **array);
+void					display_result(int result);
+
 
 /*
 ** execute.c
 */
 int						do_operation(char *line, t_stack *a, t_stack *b);
 void					leave_execution(t_stack *a, t_stack *b);
-void					execute(t_stack *a, t_stack *b);
+int						execute(t_stack *a, t_stack *b);
 
 /*
 ** swap.c

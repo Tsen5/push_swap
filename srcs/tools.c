@@ -6,7 +6,7 @@
 /*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 00:58:54 by swann             #+#    #+#             */
-/*   Updated: 2020/01/07 01:53:11 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/12 04:10:30 by swann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		is_valid(t_stack *a, t_stack *b)
 	i = 1;
 	while (i < a->size)
 	{
-		if (a->values[i] < a->values[i - 1])
+		if (a->values[i] > a->values[i - 1])
 			return (0);
 		i++;
 	}

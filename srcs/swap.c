@@ -6,11 +6,11 @@
 /*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 16:07:03 by swann             #+#    #+#             */
-/*   Updated: 2020/01/07 00:06:53 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/13 13:11:27 by swann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/checker.h"
+#include "../includes/tools.h"
 
 void	swap(t_stack *stack)
 {

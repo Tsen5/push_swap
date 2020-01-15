@@ -6,11 +6,11 @@
 /*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 00:11:23 by swann             #+#    #+#             */
-/*   Updated: 2020/01/07 01:04:28 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/13 13:11:35 by swann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/checker.h"
+#include "../includes/tools.h"
 
 void	push(t_stack *from, t_stack *to)
 {

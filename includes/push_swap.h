@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.h                                          :+:      :+:    :+:   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/05 19:21:25 by swann             #+#    #+#             */
-/*   Updated: 2020/01/13 13:09:19 by swann            ###   ########.fr       */
+/*   Created: 2020/01/13 12:11:56 by swann             #+#    #+#             */
+/*   Updated: 2020/01/15 14:49:54 by swann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CHECKER_H
-# define CHECKER_H
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
+
+typedef struct		s_chunk
+{
+	int				i;
+	int				nb;
+	int				gap;
+}					t_chunk;
 
 /*
-** checker.c
+** push_swap.c
 */
-void					display_result(int result);
-int						is_valid(t_stack *a, t_stack *b);
 
 /*
-** execute.c
+** moves.c
 */
-int						do_operation(char *line, t_stack *a, t_stack *b);
-void					leave_execution(t_stack *a, t_stack *b);
-int						execute(t_stack *a, t_stack *b);
+void	moves(t_stack *a, t_stack *b);
 
 #endif

@@ -6,10 +6,11 @@
 /*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 12:34:53 by swann             #+#    #+#             */
-/*   Updated: 2020/01/12 03:59:26 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/13 15:23:42 by swann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/tools.h"
 #include "../includes/checker.h"
 
 int		do_operation(char *line, t_stack *a, t_stack *b)
@@ -41,20 +42,20 @@ int		do_operation(char *line, t_stack *a, t_stack *b)
 	return (1);
 }
 
-static void		print_stack(t_stack *stack)
-{
-	int		i;
+// static void		print_stack(t_stack *stack)
+// {
+// 	int		i;
 
-	i = 0;
-	ft_putstr("STACK : ");
-	while (i < stack->size)
-	{
-		ft_putnbr(stack->values[i]);
-		ft_putchar(' ');
-		i++;
-	}
-	ft_putchar('\n');
-}
+// 	i = 0;
+// 	ft_putstr("STACK : ");
+// 	while (i < stack->size)
+// 	{
+// 		ft_putnbr(stack->values[i]);
+// 		ft_putchar(' ');
+// 		i++;
+// 	}
+// 	ft_putchar('\n');
+// }
 
 int		execute(t_stack *a, t_stack *b)
 {
@@ -64,11 +65,11 @@ int		execute(t_stack *a, t_stack *b)
 	// if (is_valid(a, b) == 1)
 	// 	return (leave_execution(a, b));
 	result = is_valid(a, b);
-	while (42)
+	while (get_next_line(0, &line))
 	{
-		ft_putstr("checker_$> ");
-		get_next_line(0, &line);
-		line = ft_strtrimf(line);
+		// ft_putstr("checker_$> ");
+		// get_next_line(0, &line);
+		// line = ft_strtrimf(line);
 		if (do_operation(line, a, b) == 1)
 		{
 			free(line);
@@ -78,8 +79,8 @@ int		execute(t_stack *a, t_stack *b)
 			// 	break ;
 			// }
 			result = is_valid(a, b);
-			print_stack(a);
-			print_stack(b);
+			// print_stack(a);
+			// print_stack(b);
 		}
 		else
 		{

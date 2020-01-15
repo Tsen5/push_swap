@@ -1,63 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 19:15:23 by swann             #+#    #+#             */
-/*   Updated: 2020/01/12 04:08:49 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/13 13:12:06 by swann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/tools.h"
 #include "../includes/checker.h"
-
-int		check_values(int len, char **array)
-{
-	int		i;
-	char	*tmp;
-	int		check;
-
-	i = 1;
-	while (i < len)
-	{
-		tmp = ft_strtrim(array[i]);
-		if (ft_isnumber(tmp) == 0)
-			check = 0;
-		else
-			check = (atol(tmp) > INT_MAX || atol(tmp) < INT_MIN) ? 0 : 1;
-		free(tmp);
-		if (check == 0)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int		*generate_values(int len, char **array)
-{
-	int		*values;
-	int		i;
-	int		j;
-
-	if (!(values = (int *)malloc(sizeof(int) * (len - 1))))
-		return (NULL);
-	i = 0;
-	while (++i < len)
-	{
-		values[i - 1] = ft_atoi(array[len - i]);
-		j = i - 1;
-		while (--j >= 0)
-		{
-			if (values[j] == values[i - 1])
-			{
-				free(values);
-				return (NULL);
-			}
-		}
-	}
-	return (values);
-}
 
 void	display_result(int result)
 {
@@ -67,6 +21,24 @@ void	display_result(int result)
 		ft_putendl_col_fd("KO", YEL, 2);
 	else
 		ft_putendl_col_fd("Error : bad instruction", RED, 2);
+}
+
+int		is_valid(t_stack *a, t_stack *b)
+{
+	int		i;
+
+	if (b->size > 0)
+		return (0);
+	if (a->size == 1)
+		return (1);
+	i = 1;
+	while (i < a->size)
+	{
+		if (a->values[i] > a->values[i - 1])
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int		main(int argc, char **argv)

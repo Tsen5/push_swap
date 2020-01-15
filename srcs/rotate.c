@@ -6,11 +6,11 @@
 /*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 00:11:51 by swann             #+#    #+#             */
-/*   Updated: 2020/01/07 01:29:30 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/13 13:11:31 by swann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/checker.h"
+#include "../includes/tools.h"
 
 void	rotate(t_stack *stack, int reverse)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slegros <slegros@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 12:11:56 by swann             #+#    #+#             */
-/*   Updated: 2020/01/15 14:49:54 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/15 18:11:52 by slegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ typedef struct		s_chunk
 	int				i;
 	int				nb;
 	int				gap;
+	int				min;
+	int				max;
 }					t_chunk;
 
 /*

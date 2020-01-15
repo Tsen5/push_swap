@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slegros <slegros@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 15:22:08 by swann             #+#    #+#             */
-/*   Updated: 2020/01/15 15:20:21 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/15 19:01:29 by slegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,22 @@ int		findi_value_from(t_stack *stack, int start, int end, char *from)
 
 	if (ft_strcmp(from, "up") == 0)
 	{
-		add = 1;
-		i = 0;
-	}
-	else
-	{
 		i = stack->size - 1;
 		add = -1;
 	}
-	while (i >= 0 || i < stack->size)
+	else
+	{
+		i = 0;
+		add = 1;
+	}
+	while (i >= 0 && i < stack->size)
 	{
 		if (stack->values[i] >= start && stack->values[i] <= end)
+		{
+			ft_putstr("  - Return : ");
+			ft_putnbrendl(stack->values[i]);
 			return (i);
+		}
 		i += add;
 	}
 	return (-1);
@@ -155,34 +159,106 @@ int		find_interval(t_stack *stack, int nb_chunk)
 
 	min = findi_min_in(stack, 0, stack->size - 1);
 	max = findi_max_in(stack, 0, stack->size - 1);
+	ft_putstr("MIN : ");
+	ft_putnbrendl(stack->values[min]);
+	ft_putstr("MAX : ");
+	ft_putnbrendl(stack->values[max]);
 	return ((stack->values[max] - stack->values[min]) / nb_chunk);
+}
+
+void	init_chunk(t_stack *stack, t_chunk *c)
+{
+	int		min_i;
+	int		max_i;
+
+	c->i = 0;
+	c->nb = 5; // find_nb_chunk()
+	c->gap = find_interval(stack, c->nb);
+	min_i = findi_min_in(stack, 0, stack->size - 1);
+	c->min = stack->values[min_i];
+	max_i = findi_max_in(stack, 0, stack->size - 1);
+	c->max = stack->values[max_i];
+
+	ft_putendl("----------- INIT CHUNK -----------");	
+	ft_putstr("NB : ");
+	ft_putnbrendl(c->nb);
+	ft_putstr("GAP : ");
+	ft_putnbrendl(c->gap);
+	ft_putstr("MIN : ");
+	ft_putnbrendl(c->min);
+	ft_putstr("MAX : ");
+	ft_putnbrendl(c->max);
+	ft_putendl("----------------------------------");	
+}
+
+int		geti_value(t_stack *a, t_chunk c)
+{
+	int		start;
+	int		end;
+	int		up_i;
+	int		down_i;
+
+	start = (c.i * c.gap) + c.min;
+	end = (((c.i + 1) * c.gap) - 1) + c.min;
+	ft_putendl("Treated gap :");
+	ft_putstr("  - Start : ");
+	ft_putnbrendl(start);
+	ft_putstr("  - End : ");
+	ft_putnbrendl(end);
+	up_i = findi_value_from(a, start, end, "up");
+	down_i = findi_value_from(a, start, end, "down");
+	if ((up_i + 1) < a->size - down_i)
+		return (up_i);
+	else
+		return (down_i);
+}
+
+void	push_i_to_b(t_stack *a, t_stack *b, int i)
+{
+	if (i < a->size / 2)
+	{
+		ft_putendl("  - Way : rra");
+		while (i >= 0)
+		{
+			// ft_putendl_fd("rra", 1);
+			rotate(a, 1);
+			i--;
+		}
+	}
+	else
+	{
+		ft_putendl("  - Way : ra");
+		while (i < (a->size - 1))
+		{
+			// ft_putendl_fd("ra", 1);
+			rotate(a, 0);
+			i++;
+		}
+	}
+	// ft_putendl_fd("pb", 1);
+	ft_putstr("  - Pushed Value : ");
+	ft_putnbrendl(a->values[a->size - 1]);
+	push(a, b);
 }
 
 void	big_sort(t_stack *a, t_stack *b)
 {
+	int		i;
 	t_chunk	c;
 
-	c.i = 0;
-	c.nb = 5; // find_nb_chunk()
-	c.gap = find_interval(a, c.nb);
-	ft_putnbrendl(c.gap);
-	// while (a->size > 0)
-	while (c.i <= c.nb)
+	init_chunk(a, &c);
+	while (a->size > 0)
 	{
-		// i = (findi_value_from(a, c.i * c.gap, ((c.i + 1) * c.gap) - 1))
-		ft_putstr("––––– TOUR ");
-		ft_putnbr(c.i + 1);
-		ft_putendl(" –––––");
-		ft_putstr("START : ");
-		ft_putnbrendl(c.i * c.gap);
-		ft_putstr("END : ");
-		ft_putnbrendl(((c.i + 1) * c.gap) - 1);
-		a->size -= c.gap;
-		c.i++;
+		i = geti_value(a, c);
+		if (i > -1)
+			push_i_to_b(a, b, i);
+		else
+			c.i++;
+		print_stack(a);
+		print_stack(b);
+		sleep(1);
 	}
-	c.i = b->size;
 }
-/* ************************************************************************** */
 
 void	moves(t_stack *a, t_stack *b)
 {
@@ -195,4 +271,5 @@ void	moves(t_stack *a, t_stack *b)
 	// else
 	// 	insertion_sort(a, b);
 	print_stack(a);
+	print_stack(b);
 }

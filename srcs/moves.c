@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slegros <slegros@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 15:22:08 by swann             #+#    #+#             */
-/*   Updated: 2020/01/15 20:12:42 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/16 17:00:03 by slegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,11 +193,8 @@ int		geti_value(t_stack *a, t_chunk c)
 		return (down_i);
 }
 
-void	push_i_to_b(t_stack *a, t_stack *b, int i)
+void	push_i_to_top_a(t_stack *a, int i)
 {
-	int		move;
-	
-	move = 1;
 	if (i < a->size / 2)
 	{
 		while (i >= 0)
@@ -205,7 +202,6 @@ void	push_i_to_b(t_stack *a, t_stack *b, int i)
 			ft_putendl_fd("rra", 1);
 			rotate(a, 1);
 			i--;
-			move++;
 		}
 	}
 	else
@@ -215,36 +211,82 @@ void	push_i_to_b(t_stack *a, t_stack *b, int i)
 			ft_putendl_fd("ra", 1);
 			rotate(a, 0);
 			i++;
-			move++;
 		}
 	}
-	ft_putnbrendl(move);
-	ft_putendl_fd("pb", 1);
-	push(a, b);
 }
 
-void	push_i_to_a(t_stack *b, t_stack *a, int i)
+void	push_j_to_top_b(t_stack *b, int j)
 {
-	if (i < b->size / 2)
+	if (j < b->size / 2)
 	{
-		while (i >= 0)
+		while (j >= 0)
 		{
 			ft_putendl_fd("rrb", 1);
 			rotate(b, 1);
-			i--;
+			j--;
 		}
 	}
 	else
 	{
-		while (i < (b->size - 1))
+		while (j < (b->size - 1))
 		{
 			ft_putendl_fd("rb", 1);
 			rotate(b, 0);
-			i++;
+			j++;
 		}
 	}
-	ft_putendl_fd("pa", 1);
-	push(b, a);
+}
+
+void	push_i_to_b(t_stack *a, t_stack *b, int i)
+{
+	int		j;
+
+	if (b->size < 2)
+	{
+		if (b->size == 1 && b->values[0] > a->values[i])
+		{
+			push_i_to_top_a(a, i);
+			ft_putendl_fd("pb", 1);
+			push(a, b);
+			ft_putendl_fd("sa", 1);
+			swap(b);
+		}
+		else
+		{
+			push_i_to_top_a(a, i);
+			ft_putendl_fd("pb", 1);
+			push(a, b);
+		}
+	}
+	else
+	{
+		if (a->values[i] > b->values[findi_max_in(b, 0, b->size - 1)]
+			|| a->values[i] < b->values[findi_min_in(b, 0, b->size - 1)])
+			j = findi_max_in(b, 0, b->size - 1);
+		else
+		{
+			j = 0;
+			while (j < (b->size - 1))
+			{
+				if (a->values[i] > b->values[j] && a->values[i] < b->values[j + 1])
+					break ;
+				j++;
+			}
+		}
+		// ft_putstr("Value to insert on top of B : ");
+		// ft_putnbrendl(a->values[i]);
+		// ft_putstr("Value to put on top of B : ");
+		// ft_putnbrendl(b->values[j]);
+		// ft_putstr("B before : ");
+		// print_stack(b);
+		push_j_to_top_b(b, j);
+		// ft_putstr("B after : ");
+		// print_stack(b);
+		// sleep(5);
+		push_i_to_top_a(a, i);
+		ft_putendl_fd("pb", 1);
+		push(a, b);
+	}
 }
 
 void	big_sort(t_stack *a, t_stack *b)
@@ -260,15 +302,15 @@ void	big_sort(t_stack *a, t_stack *b)
 			push_i_to_b(a, b, i);
 		else
 			c.i++;
-		sleep(1);
 		// print_stack(a);
 		// print_stack(b);
-		// sleep(1);
+		// sleep(3);
 	}
+	push_j_to_top_b(b, findi_max_in(b, 0, (b->size - 1)));
 	while (b->size > 0)
 	{
-		i = findi_max_in(b, 0, b->size - 1);
-		push_i_to_a(b, a, i);
+		ft_putendl_fd("pa", 1);
+		push(b, a);
 	}
 }
 
@@ -283,5 +325,5 @@ void	moves(t_stack *a, t_stack *b)
 	// else
 	// 	insertion_sort(a, b);
 	// print_stack(a);
-	// print_stack(b);
+	// print_stack(b);	
 }

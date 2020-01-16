@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slegros <slegros@student.42.fr>            +#+  +:+       +#+        */
+/*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 15:22:08 by swann             #+#    #+#             */
-/*   Updated: 2020/01/15 19:01:29 by slegros          ###   ########.fr       */
+/*   Updated: 2020/01/15 20:12:42 by swann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/tools.h"
 #include "../includes/push_swap.h"
 
-static void		print_stack(t_stack *stack)
-{
-	int		i;
+// static void		print_stack(t_stack *stack)
+// {
+// 	int		i;
 
-	i = stack->size - 1;
-	ft_putstr("STACK : ");
-	while (i >= 0)
-	{
-		ft_putnbr(stack->values[i]);
-		ft_putchar(' ');
-		i--;
-	}
-	ft_putchar('\n');
-}
+// 	i = stack->size - 1;
+// 	ft_putstr("STACK : ");
+// 	while (i >= 0)
+// 	{
+// 		ft_putnbr(stack->values[i]);
+// 		ft_putchar(' ');
+// 		i--;
+// 	}
+// 	ft_putchar('\n');
+// }
 
 int		findi_min_in(t_stack *stack, int start, int end)
 {
@@ -79,8 +79,8 @@ int		findi_value_from(t_stack *stack, int start, int end, char *from)
 	{
 		if (stack->values[i] >= start && stack->values[i] <= end)
 		{
-			ft_putstr("  - Return : ");
-			ft_putnbrendl(stack->values[i]);
+			// ft_putstr("  - Return : ");
+			// ft_putnbrendl(stack->values[i]);
 			return (i);
 		}
 		i += add;
@@ -159,10 +159,6 @@ int		find_interval(t_stack *stack, int nb_chunk)
 
 	min = findi_min_in(stack, 0, stack->size - 1);
 	max = findi_max_in(stack, 0, stack->size - 1);
-	ft_putstr("MIN : ");
-	ft_putnbrendl(stack->values[min]);
-	ft_putstr("MAX : ");
-	ft_putnbrendl(stack->values[max]);
 	return ((stack->values[max] - stack->values[min]) / nb_chunk);
 }
 
@@ -172,23 +168,12 @@ void	init_chunk(t_stack *stack, t_chunk *c)
 	int		max_i;
 
 	c->i = 0;
-	c->nb = 5; // find_nb_chunk()
+	c->nb = 6; // find_nb_chunk()
 	c->gap = find_interval(stack, c->nb);
 	min_i = findi_min_in(stack, 0, stack->size - 1);
 	c->min = stack->values[min_i];
 	max_i = findi_max_in(stack, 0, stack->size - 1);
 	c->max = stack->values[max_i];
-
-	ft_putendl("----------- INIT CHUNK -----------");	
-	ft_putstr("NB : ");
-	ft_putnbrendl(c->nb);
-	ft_putstr("GAP : ");
-	ft_putnbrendl(c->gap);
-	ft_putstr("MIN : ");
-	ft_putnbrendl(c->min);
-	ft_putstr("MAX : ");
-	ft_putnbrendl(c->max);
-	ft_putendl("----------------------------------");	
 }
 
 int		geti_value(t_stack *a, t_chunk c)
@@ -200,11 +185,6 @@ int		geti_value(t_stack *a, t_chunk c)
 
 	start = (c.i * c.gap) + c.min;
 	end = (((c.i + 1) * c.gap) - 1) + c.min;
-	ft_putendl("Treated gap :");
-	ft_putstr("  - Start : ");
-	ft_putnbrendl(start);
-	ft_putstr("  - End : ");
-	ft_putnbrendl(end);
 	up_i = findi_value_from(a, start, end, "up");
 	down_i = findi_value_from(a, start, end, "down");
 	if ((up_i + 1) < a->size - down_i)
@@ -215,30 +195,56 @@ int		geti_value(t_stack *a, t_chunk c)
 
 void	push_i_to_b(t_stack *a, t_stack *b, int i)
 {
+	int		move;
+	
+	move = 1;
 	if (i < a->size / 2)
 	{
-		ft_putendl("  - Way : rra");
 		while (i >= 0)
 		{
-			// ft_putendl_fd("rra", 1);
+			ft_putendl_fd("rra", 1);
 			rotate(a, 1);
+			i--;
+			move++;
+		}
+	}
+	else
+	{
+		while (i < (a->size - 1))
+		{
+			ft_putendl_fd("ra", 1);
+			rotate(a, 0);
+			i++;
+			move++;
+		}
+	}
+	ft_putnbrendl(move);
+	ft_putendl_fd("pb", 1);
+	push(a, b);
+}
+
+void	push_i_to_a(t_stack *b, t_stack *a, int i)
+{
+	if (i < b->size / 2)
+	{
+		while (i >= 0)
+		{
+			ft_putendl_fd("rrb", 1);
+			rotate(b, 1);
 			i--;
 		}
 	}
 	else
 	{
-		ft_putendl("  - Way : ra");
-		while (i < (a->size - 1))
+		while (i < (b->size - 1))
 		{
-			// ft_putendl_fd("ra", 1);
-			rotate(a, 0);
+			ft_putendl_fd("rb", 1);
+			rotate(b, 0);
 			i++;
 		}
 	}
-	// ft_putendl_fd("pb", 1);
-	ft_putstr("  - Pushed Value : ");
-	ft_putnbrendl(a->values[a->size - 1]);
-	push(a, b);
+	ft_putendl_fd("pa", 1);
+	push(b, a);
 }
 
 void	big_sort(t_stack *a, t_stack *b)
@@ -254,9 +260,15 @@ void	big_sort(t_stack *a, t_stack *b)
 			push_i_to_b(a, b, i);
 		else
 			c.i++;
-		print_stack(a);
-		print_stack(b);
 		sleep(1);
+		// print_stack(a);
+		// print_stack(b);
+		// sleep(1);
+	}
+	while (b->size > 0)
+	{
+		i = findi_max_in(b, 0, b->size - 1);
+		push_i_to_a(b, a, i);
 	}
 }
 
@@ -266,10 +278,10 @@ void	moves(t_stack *a, t_stack *b)
 		tiny_sort(a);
 	else if (a->size >= 3 && a->size < 6)
 		small_sort(a, b);
-	else if (a->size >= 6 && a->size <= 100)
+	else if (a->size >= 6 && a->size <= 500)
 		big_sort(a, b);
 	// else
 	// 	insertion_sort(a, b);
-	print_stack(a);
-	print_stack(b);
+	// print_stack(a);
+	// print_stack(b);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slegros <slegros@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 12:41:43 by swann             #+#    #+#             */
-/*   Updated: 2020/01/15 14:48:00 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/17 16:35:03 by slegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ int						*generate_values(int len, char **array);
 void					remove_from_stack(t_stack *stack, int i);
 void					add_to_stack(t_stack *stack, int elem, int index);
 void					clean_stack(t_stack *a, t_stack *b);
+int						is_valid(t_stack *a, t_stack *b);
 
 #endif

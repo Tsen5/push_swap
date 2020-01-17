@@ -6,27 +6,27 @@
 /*   By: slegros <slegros@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 15:22:08 by swann             #+#    #+#             */
-/*   Updated: 2020/01/16 17:00:03 by slegros          ###   ########.fr       */
+/*   Updated: 2020/01/17 17:05:18 by slegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/tools.h"
 #include "../includes/push_swap.h"
 
-// static void		print_stack(t_stack *stack)
-// {
-// 	int		i;
+static void		print_stack(t_stack *stack)
+{
+	int		i;
 
-// 	i = stack->size - 1;
-// 	ft_putstr("STACK : ");
-// 	while (i >= 0)
-// 	{
-// 		ft_putnbr(stack->values[i]);
-// 		ft_putchar(' ');
-// 		i--;
-// 	}
-// 	ft_putchar('\n');
-// }
+	i = stack->size - 1;
+	// ft_putstr("STACK : ");
+	while (i >= 0)
+	{
+		// ft_putnbr(stack->values[i]);
+		// ft_putchar(' ');
+		i--;
+	}
+	// ft_putchar('\n');
+}
 
 int		findi_min_in(t_stack *stack, int start, int end)
 {
@@ -187,7 +187,9 @@ int		geti_value(t_stack *a, t_chunk c)
 	end = (((c.i + 1) * c.gap) - 1) + c.min;
 	up_i = findi_value_from(a, start, end, "up");
 	down_i = findi_value_from(a, start, end, "down");
-	if ((up_i + 1) < a->size - down_i)
+	ft_putnbrendl(up_i);
+	ft_putnbrendl(down_i);
+	if (up_i < a->size - down_i)
 		return (up_i);
 	else
 		return (down_i);
@@ -248,7 +250,7 @@ void	push_i_to_b(t_stack *a, t_stack *b, int i)
 			push_i_to_top_a(a, i);
 			ft_putendl_fd("pb", 1);
 			push(a, b);
-			ft_putendl_fd("sa", 1);
+			ft_putendl_fd("sb", 1);
 			swap(b);
 		}
 		else
@@ -302,9 +304,9 @@ void	big_sort(t_stack *a, t_stack *b)
 			push_i_to_b(a, b, i);
 		else
 			c.i++;
-		// print_stack(a);
-		// print_stack(b);
-		// sleep(3);
+		print_stack(a);
+		print_stack(b);
+		// sleep(5);
 	}
 	push_j_to_top_b(b, findi_max_in(b, 0, (b->size - 1)));
 	while (b->size > 0)
@@ -316,14 +318,17 @@ void	big_sort(t_stack *a, t_stack *b)
 
 void	moves(t_stack *a, t_stack *b)
 {
-	if (a->size < 3)
-		tiny_sort(a);
-	else if (a->size >= 3 && a->size < 6)
-		small_sort(a, b);
-	else if (a->size >= 6 && a->size <= 500)
-		big_sort(a, b);
-	// else
-	// 	insertion_sort(a, b);
-	// print_stack(a);
-	// print_stack(b);	
+	if (is_valid(a, b) == 0)
+	{
+		if (a->size < 3)
+			tiny_sort(a);
+		else if (a->size >= 3 && a->size < 6)
+			small_sort(a, b);
+		else if (a->size >= 6 && a->size <= 500)
+			big_sort(a, b);
+		// else
+		// 	insertion_sort(a, b);
+		// print_stack(a);
+		// print_stack(b);
+	}
 }

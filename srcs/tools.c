@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slegros <slegros@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 00:58:54 by swann             #+#    #+#             */
-/*   Updated: 2020/01/13 13:11:16 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/17 16:34:39 by slegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,22 @@ void	clean_stack(t_stack *a, t_stack *b)
 	{
 		free(b->values);
 	}
+}
+
+int		is_valid(t_stack *a, t_stack *b)
+{
+	int		i;
+
+	if (b->size > 0)
+		return (0);
+	if (a->size == 1)
+		return (1);
+	i = 1;
+	while (i < a->size)
+	{
+		if (a->values[i] > a->values[i - 1])
+			return (0);
+		i++;
+	}
+	return (1);
 }

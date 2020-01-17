@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slegros <slegros@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 19:21:25 by swann             #+#    #+#             */
-/*   Updated: 2020/01/13 13:09:19 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/17 16:34:50 by slegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 ** checker.c
 */
 void					display_result(int result);
-int						is_valid(t_stack *a, t_stack *b);
 
 /*
 ** execute.c

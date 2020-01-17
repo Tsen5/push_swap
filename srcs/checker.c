@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swann <swann@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slegros <slegros@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 19:15:23 by swann             #+#    #+#             */
-/*   Updated: 2020/01/13 13:12:06 by swann            ###   ########.fr       */
+/*   Updated: 2020/01/17 16:34:30 by slegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,6 @@ void	display_result(int result)
 		ft_putendl_col_fd("KO", YEL, 2);
 	else
 		ft_putendl_col_fd("Error : bad instruction", RED, 2);
-}
-
-int		is_valid(t_stack *a, t_stack *b)
-{
-	int		i;
-
-	if (b->size > 0)
-		return (0);
-	if (a->size == 1)
-		return (1);
-	i = 1;
-	while (i < a->size)
-	{
-		if (a->values[i] > a->values[i - 1])
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 int		main(int argc, char **argv)
